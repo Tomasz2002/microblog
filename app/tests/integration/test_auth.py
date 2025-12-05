@@ -15,32 +15,29 @@ class AuthRoutesCase(unittest.TestCase):
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
-
+# Teset rejestacja i logowanie
     def test_registration_and_login(self):
-        # Teset rejestacja i logowanie
         response = self.client.post('/auth/register', data={
             'username': 'newuser', 'email': 'new@example.com',
             'password': 'pass', 'password2': 'pass'
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Sign In', response.data)
-
-        #logowanie
         response = self.client.post('/auth/login', data={
             'username': 'newuser', 'password': 'pass'
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Hi, newuser!', response.data)
-
+  # Błędne hasło albo login
     def test_login_error(self):
-        # Błędne hasło
+
         response = self.client.post('/auth/login', data={
             'username': 'wrong', 'password': 'bad'
         }, follow_redirects=True)
         self.assertIn(b'Invalid username or password', response.data)
-
+    # Blokada duplikatów maila labo nicku
     def test_registration_duplicates(self):
-        # Blokada duplikatów maila albo nicku
+
         u = User(username='duplicate', email='dup@test.com')
         u.set_password('pass')
         db.session.add(u)

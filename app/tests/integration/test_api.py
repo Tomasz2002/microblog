@@ -22,7 +22,7 @@ class APICase(unittest.TestCase):
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-#test pobrania danych użytkownika przez API
+    
     def test_get_user_api(self):
         u = User(username='apiuser', email='api@example.com')
         u.set_password('pass')

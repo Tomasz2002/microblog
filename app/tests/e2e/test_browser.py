@@ -18,6 +18,7 @@ class SeleniumCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         options = webdriver.ChromeOptions()
+        # options.add_argument('--headless') 
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('--window-size=1920,1080')
@@ -49,7 +50,7 @@ class SeleniumCase(unittest.TestCase):
             'email': f'user_{unique_id}@test.com',
             'password': 'pass123'
         }
-# Testowanie pełnego przepływu użytkownika: rejestracja, logowanie, tworzenie posta
+
     def test_full_user_flow(self):
         driver = self.driver
         user_data = self.get_unique_user_data()
@@ -75,7 +76,6 @@ class SeleniumCase(unittest.TestCase):
         )
         self.assertIn("Selenium post", driver.page_source)
 
-#testowanie edycji profilu użytkownika
     def test_edit_profile(self):
         driver = self.driver
         user_data = self.get_unique_user_data()
